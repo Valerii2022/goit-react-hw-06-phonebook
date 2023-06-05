@@ -63,7 +63,7 @@ export const App = () => {
     <>
       <h1>Phonebook</h1>
       <button type="button" onClick={() => dispatch(add())}>
-        add{' '}
+        add
       </button>
       {/* <ContactForm /> */}
       <h2>Contacts</h2>
