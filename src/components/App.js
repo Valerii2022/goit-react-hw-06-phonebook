@@ -58,6 +58,7 @@ import { add, remove, getUsersNames } from '../redux/usersSlice';
 export const App = () => {
   const dispatch = useDispatch();
   const numberOfUsers = useSelector(getUsersNames);
+  console.log(numberOfUsers);
   return (
     <>
       <h1>Phonebook</h1>
