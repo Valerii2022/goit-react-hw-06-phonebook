@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { filter } from 'redux/filterSlice';
 import { FindLabel, FindInput, Form } from './styled';
 
-export const Filter = ({ filter, findName }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
   return (
     <Form>
       <FindLabel>
@@ -9,15 +11,9 @@ export const Filter = ({ filter, findName }) => {
         <FindInput
           type="text"
           name="searchName"
-          value={filter}
-          onChange={findName}
+          onChange={e => dispatch(filter(e.target.value))}
         />
       </FindLabel>
     </Form>
   );
-};
-
-Filter.propType = {
-  filter: PropTypes.string.isRequired,
-  findName: PropTypes.func.isRequired,
 };

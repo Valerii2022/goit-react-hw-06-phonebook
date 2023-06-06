@@ -7,6 +7,7 @@ const filterSlice = createSlice({
   initialState: '',
   reducers: {
     filter(state, action) {
+      console.log(state.filter);
       state.filter = action.payload;
     },
   },
@@ -15,7 +16,6 @@ const filterSlice = createSlice({
 const persistConfig = {
   key: 'filter',
   storage,
-  // whitelist: ['value'],
 };
 
 export const filterReducer = persistReducer(persistConfig, filterSlice.reducer);
@@ -23,4 +23,4 @@ export const filterReducer = persistReducer(persistConfig, filterSlice.reducer);
 export const { filter } = filterSlice.actions;
 
 // Selectors
-export const getFilteredNames = state => state.filter;
+export const getFilteredNames = state => state.filter.filter;
