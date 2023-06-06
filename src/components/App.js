@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { add, remove, getContactsNames } from '../redux/contactsSlice';
-import { getFilteredNames } from '../redux/filterSlice';
+import { filter, getFilteredNames } from '../redux/filterSlice';
 
 // import { useState } from 'react';
 import { nanoid } from 'nanoid';
@@ -58,12 +58,15 @@ import { nanoid } from 'nanoid';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const numberOfUsers = useSelector(getContactsNames);
-  const filteredUsers = useSelector(getFilteredNames);
-  console.log(filteredUsers, numberOfUsers);
+  const contacts = useSelector(getContactsNames);
+  const filteredContacts = useSelector(getFilteredNames);
+  const renderNames = contacts.filter(contact =>
+    contact.name.includes(filteredContacts.filter)
+  );
+  console.log(filteredContacts);
+  console.log(contacts);
   let name = '';
   let number = '';
-  // console.log(numberOfUsers);
 
   const handleInputChange = e => {
     if (e.target.name === 'name') name = e.target.value;
@@ -107,7 +110,11 @@ export const App = () => {
       <form>
         <label>
           Find contacts by name
-          <input type="text" name="searchName" />
+          <input
+            type="text"
+            name="searchName"
+            onChange={e => dispatch(filter(e.target.value))}
+          />
         </label>
       </form>
       {/* <button type="button" onClick={() => dispatch(remove(5))}>
@@ -118,7 +125,7 @@ export const App = () => {
       {/* <p>Contacts: {numberOfUsers}</p> */}
 
       <ul>
-        {filteredUsers.map(({ name, id, number }) => {
+        {renderNames.map(({ name, id, number }) => {
           return (
             <li key={id}>
               <p>
