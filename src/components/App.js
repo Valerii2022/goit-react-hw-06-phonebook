@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { add, remove, getUsersNames } from '../redux/usersSlice';
+import { add, remove, getContactsNames } from '../redux/contactsSlice';
 
 // import { useState } from 'react';
-// import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 // import { ContactList } from './ContactList';
 // import { ContactForm } from './ContactForm';
 // import { Filter } from './Filter';
@@ -25,7 +25,7 @@ import { add, remove, getUsersNames } from '../redux/usersSlice';
 //       return alert(`${contactName} is already in contacts`);
 //     }
 
-//     const id = nanoid(10);
+// const id = nanoid(10);
 //     setContacts([
 //       ...contacts,
 //       { name: contactName, id: id, number: contactNumber },
@@ -57,21 +57,69 @@ import { add, remove, getUsersNames } from '../redux/usersSlice';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const numberOfUsers = useSelector(getUsersNames);
-  console.log(numberOfUsers);
+  const numberOfUsers = useSelector(getContactsNames);
+  let name = '';
+  let number = '';
+  // console.log(numberOfUsers);
+
+  const handleInputChange = e => {
+    if (e.target.name === 'name') name = e.target.value;
+    if (e.target.name === 'number') number = e.target.value;
+  };
+
+  const onSubmit = e => {
+    const id = nanoid(10);
+    e.preventDefault();
+    dispatch(add({ id, name, number }));
+    e.target[0].value = '';
+    e.target[1].value = '';
+  };
+
   return (
     <>
       <h1>Phonebook</h1>
-      <button type="button" onClick={() => dispatch(add())}>
-        add
-      </button>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          name="name"
+          // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="tel"
+          name="number"
+          // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          onChange={handleInputChange}
+          required
+        />
+        <button type="submit">add contact</button>
+        {/* <button type="reset">reset</button> */}
+      </form>
+
       {/* <ContactForm /> */}
       <h2>Contacts</h2>
-      <button type="button" onClick={() => dispatch(remove())}>
+      {/* <button type="button" onClick={() => dispatch(remove(5))}>
         remove
-      </button>
+      </button> */}
       {/* <Filter />
       <ContactList /> */}
+      {/* <p>Contacts: {numberOfUsers}</p> */}
+
+      <ul>
+        {numberOfUsers.map(({ name, id, number }) => {
+          return (
+            <li key={id}>
+              <p>
+                {name}: <span>{number}</span>
+              </p>
+              <button onClick={() => dispatch(remove(id))}>Delete</button>
+            </li>
+          );
+        })}
+      </ul>
     </>
   );
 };
