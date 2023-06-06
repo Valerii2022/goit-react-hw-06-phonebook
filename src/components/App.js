@@ -60,7 +60,7 @@ export const App = () => {
   const dispatch = useDispatch();
   const numberOfUsers = useSelector(getContactsNames);
   const filteredUsers = useSelector(getFilteredNames);
-  console.log(filteredUsers);
+  console.log(filteredUsers, numberOfUsers);
   let name = '';
   let number = '';
   // console.log(numberOfUsers);
