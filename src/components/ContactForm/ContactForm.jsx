@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid';
+import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContactsNames } from 'redux/contactsSlice';
 import { add } from '../../redux/contactsSlice';
