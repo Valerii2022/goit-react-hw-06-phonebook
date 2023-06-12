@@ -1,9 +1,10 @@
-import { useDispatch } from 'react-redux';
-import { filter } from 'redux/filterSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { filter, getFilteredNames } from 'redux/filterSlice';
 import { FindLabel, FindInput, Form } from './styled';
 
 export const Filter = () => {
   const dispatch = useDispatch();
+  const queryFilter = useSelector(getFilteredNames);
   return (
     <Form>
       <FindLabel>
@@ -11,6 +12,7 @@ export const Filter = () => {
         <FindInput
           type="text"
           name="searchName"
+          value={queryFilter ?? ''}
           onChange={e => dispatch(filter(e.target.value))}
         />
       </FindLabel>

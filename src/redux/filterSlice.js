@@ -7,7 +7,7 @@ const filterSlice = createSlice({
   initialState: '',
   reducers: {
     filter(state, action) {
-      state.filter = action.payload;
+      state.filter = action.payload.trim();
     },
   },
 });
@@ -15,7 +15,6 @@ const filterSlice = createSlice({
 const persistConfig = {
   key: 'filter',
   storage,
-  blacklist: ['filter'],
 };
 
 export const filterReducer = persistReducer(persistConfig, filterSlice.reducer);
