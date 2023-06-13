@@ -51,7 +51,7 @@ export const ContactForm = () => {
         <FormInput
           type="tel"
           name="number"
-          pattern="[0-9]{3} [0-9]{2} [0-9]{2} [0-9]{4}"
+          pattern="[0-9]{3} [0-9]{2} [0-9]{2} [0-9]{3}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           placeholder="000 00 00 000"
           onChange={handleInputChange}
